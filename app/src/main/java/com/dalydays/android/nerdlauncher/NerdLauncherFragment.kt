@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_nerd_launcher.*
 import java.util.*
 
 class NerdLauncherFragment : Fragment() {
-    private var mRecyclerView: RecyclerView? = null
+    private lateinit var mRecyclerView: RecyclerView
 
     companion object {
         private val TAG = "NerdLauncherFragment"
@@ -28,7 +28,7 @@ class NerdLauncherFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_nerd_launcher, container, false)
         mRecyclerView = v.findViewById(R.id.app_recycler_view)
-        mRecyclerView!!.layoutManager = LinearLayoutManager(activity)
+        mRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         setupAdapter()
         return v
@@ -41,11 +41,11 @@ class NerdLauncherFragment : Fragment() {
         val activities = packageManager.queryIntentActivities(startupIntent, 0)
 
         Collections.sort(activities, object: Comparator < ResolveInfo > {
-            override fun compare(a: ResolveInfo?, b: ResolveInfo?): Int {
+            override fun compare(a: ResolveInfo, b: ResolveInfo): Int {
                 val packageManager = activity!!.packageManager
                 return String.CASE_INSENSITIVE_ORDER.compare(
-                        a!!.loadLabel(packageManager).toString(),
-                        b!!.loadLabel(packageManager).toString())
+                        a.loadLabel(packageManager).toString(),
+                        b.loadLabel(packageManager).toString())
             }
         })
 
@@ -53,17 +53,14 @@ class NerdLauncherFragment : Fragment() {
     }
 
     private class ActivityHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private var mResolveInfo: ResolveInfo? = null
-        private val mNameTextView: TextView
-
-        init {
-            mNameTextView = itemView as TextView
-        }
+        private lateinit var mResolveInfo: ResolveInfo
+        private val mNameTextView = itemView as TextView
 
         fun bindActivity(resolveInfo: ResolveInfo) {
             mResolveInfo = resolveInfo
-            // TODO: figure out how to get the activity here
-            //val packageManager = activity!!.packageManager
+            val packageManager = itemView.context.packageManager
+            val appName = mResolveInfo.loadLabel(packageManager).toString()
+            mNameTextView.text = appName
         }
     }
 }
