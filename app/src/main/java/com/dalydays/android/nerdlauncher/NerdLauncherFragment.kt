@@ -48,8 +48,6 @@ class NerdLauncherFragment : Fragment() {
             }
         })
 
-        }
-
         Log.i(TAG, "Found " + activities.size + " activities.")
     }
 }
