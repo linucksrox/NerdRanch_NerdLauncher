@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_nerd_launcher.*
 import java.util.*
 
@@ -49,5 +50,20 @@ class NerdLauncherFragment : Fragment() {
         })
 
         Log.i(TAG, "Found " + activities.size + " activities.")
+    }
+
+    private class ActivityHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var mResolveInfo: ResolveInfo? = null
+        private val mNameTextView: TextView
+
+        init {
+            mNameTextView = itemView as TextView
+        }
+
+        fun bindActivity(resolveInfo: ResolveInfo) {
+            mResolveInfo = resolveInfo
+            // TODO: figure out how to get the activity here
+            //val packageManager = activity!!.packageManager
+        }
     }
 }
