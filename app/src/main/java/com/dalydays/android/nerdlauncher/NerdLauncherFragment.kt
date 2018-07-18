@@ -50,6 +50,8 @@ class NerdLauncherFragment : Fragment() {
         })
 
         Log.i(TAG, "Found " + activities.size + " activities.")
+
+        mRecyclerView.adapter = ActivityAdapter(activities)
     }
 
     private class ActivityHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -61,6 +63,23 @@ class NerdLauncherFragment : Fragment() {
             val packageManager = itemView.context.packageManager
             val appName = mResolveInfo.loadLabel(packageManager).toString()
             mNameTextView.text = appName
+        }
+    }
+
+    private class ActivityAdapter(private val mActivities: List<ResolveInfo>) : RecyclerView.Adapter<ActivityHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityHolder {
+            var layoutInflater = LayoutInflater.from(parent.context)
+            var view = layoutInflater.inflate(android.R.layout.simple_expandable_list_item_1, parent, false)
+            return ActivityHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: ActivityHolder, position: Int) {
+            var resolveInfo = mActivities[position]
+            holder.bindActivity(resolveInfo)
+        }
+
+        override fun getItemCount(): Int {
+            return mActivities.size
         }
     }
 }
