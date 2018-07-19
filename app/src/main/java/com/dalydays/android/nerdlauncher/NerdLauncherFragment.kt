@@ -11,11 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import kotlinx.android.synthetic.main.fragment_nerd_launcher.*
+import kotlinx.android.synthetic.main.fragment_nerd_launcher.view.*
 import java.util.*
 
 class NerdLauncherFragment : Fragment() {
-    private lateinit var mRecyclerView: RecyclerView
 
     companion object {
         private val TAG = "NerdLauncherFragment"
@@ -27,13 +26,13 @@ class NerdLauncherFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_nerd_launcher, container, false)
-        app_recycler_view.layoutManager = LinearLayoutManager(activity)
+        v.app_recycler_view.layoutManager = LinearLayoutManager(activity)
 
-        setupAdapter()
+        setupAdapter(v)
         return v
     }
 
-    private fun setupAdapter() {
+    private fun setupAdapter(v: View) {
         val startupIntent = Intent(Intent.ACTION_MAIN)
         startupIntent.addCategory(Intent.CATEGORY_LAUNCHER)
         val packageManager = activity!!.packageManager
@@ -50,7 +49,7 @@ class NerdLauncherFragment : Fragment() {
 
         Log.i(TAG, "Found " + activities.size + " activities.")
 
-        app_recycler_view.adapter = ActivityAdapter(activities)
+        v.app_recycler_view.adapter = ActivityAdapter(activities)
     }
 
     private class ActivityHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
