@@ -27,8 +27,7 @@ class NerdLauncherFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_nerd_launcher, container, false)
-        mRecyclerView = v.findViewById(R.id.app_recycler_view)
-        mRecyclerView.layoutManager = LinearLayoutManager(activity)
+        app_recycler_view.layoutManager = LinearLayoutManager(activity)
 
         setupAdapter()
         return v
@@ -51,7 +50,7 @@ class NerdLauncherFragment : Fragment() {
 
         Log.i(TAG, "Found " + activities.size + " activities.")
 
-        mRecyclerView.adapter = ActivityAdapter(activities)
+        app_recycler_view.adapter = ActivityAdapter(activities)
     }
 
     private class ActivityHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
