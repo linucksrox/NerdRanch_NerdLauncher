@@ -14,6 +14,8 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_nerd_launcher.view.*
 import java.util.*
 
+
+
 class NerdLauncherFragment : Fragment() {
 
     companion object {
@@ -52,7 +54,7 @@ class NerdLauncherFragment : Fragment() {
         v.app_recycler_view.adapter = ActivityAdapter(activities)
     }
 
-    private class ActivityHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private class ActivityHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private lateinit var mResolveInfo: ResolveInfo
         private val mNameTextView = itemView as TextView
 
@@ -61,6 +63,18 @@ class NerdLauncherFragment : Fragment() {
             val packageManager = itemView.context.packageManager
             val appName = mResolveInfo.loadLabel(packageManager).toString()
             mNameTextView.text = appName
+            mNameTextView.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View) {
+            val activityInfo = mResolveInfo.activityInfo
+
+            val i = Intent(Intent.ACTION_MAIN)
+                    .setClassName(activityInfo.applicationInfo.packageName,
+                            activityInfo.name)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+            view.context.startActivity(i)
         }
     }
 
