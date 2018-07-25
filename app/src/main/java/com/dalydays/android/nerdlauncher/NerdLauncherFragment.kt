@@ -10,8 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_nerd_launcher.view.*
 import kotlinx.android.synthetic.main.item_launchable.view.*
 import java.util.*
@@ -83,13 +81,13 @@ class NerdLauncherFragment : Fragment() {
 
     private class ActivityAdapter(private val mActivities: List<ResolveInfo>) : RecyclerView.Adapter<ActivityHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityHolder {
-            var layoutInflater = LayoutInflater.from(parent.context)
-            var view = layoutInflater.inflate(R.layout.item_launchable, parent, false)
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val view = layoutInflater.inflate(R.layout.item_launchable, parent, false)
             return ActivityHolder(view)
         }
 
         override fun onBindViewHolder(holder: ActivityHolder, position: Int) {
-            var resolveInfo = mActivities[position]
+            val resolveInfo = mActivities[position]
             holder.bindActivity(resolveInfo)
         }
 
