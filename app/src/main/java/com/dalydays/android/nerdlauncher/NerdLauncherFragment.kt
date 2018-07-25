@@ -10,8 +10,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_nerd_launcher.view.*
+import kotlinx.android.synthetic.main.item_launchable.view.*
 import java.util.*
 
 
@@ -56,14 +58,15 @@ class NerdLauncherFragment : Fragment() {
 
     private class ActivityHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private lateinit var mResolveInfo: ResolveInfo
-        private val mNameTextView = itemView as TextView
 
         fun bindActivity(resolveInfo: ResolveInfo) {
             mResolveInfo = resolveInfo
             val packageManager = itemView.context.packageManager
             val appName = mResolveInfo.loadLabel(packageManager).toString()
-            mNameTextView.text = appName
-            mNameTextView.setOnClickListener(this)
+            val icon = mResolveInfo.loadIcon(packageManager)
+            itemView.item_launcher_text.text = appName
+            itemView.item_launcher_text.setOnClickListener(this)
+            itemView.item_launcher_icon.setImageDrawable(icon)
         }
 
         override fun onClick(view: View) {
@@ -81,7 +84,7 @@ class NerdLauncherFragment : Fragment() {
     private class ActivityAdapter(private val mActivities: List<ResolveInfo>) : RecyclerView.Adapter<ActivityHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityHolder {
             var layoutInflater = LayoutInflater.from(parent.context)
-            var view = layoutInflater.inflate(android.R.layout.simple_expandable_list_item_1, parent, false)
+            var view = layoutInflater.inflate(R.layout.item_launchable, parent, false)
             return ActivityHolder(view)
         }
 
