@@ -14,8 +14,6 @@ import kotlinx.android.synthetic.main.fragment_nerd_launcher.view.*
 import kotlinx.android.synthetic.main.item_launchable.view.*
 import java.util.*
 
-
-
 class NerdLauncherFragment : Fragment() {
 
     companion object {
